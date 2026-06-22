@@ -21,7 +21,7 @@ app.post("/signup", async (req, res) => {
 });
 
 // Feed API => Get All Users
-app.get("/users", async(req, res)=>{
+app.get("/feed", async(req, res)=>{
 
   try {
    const users = await User.find({});
