@@ -21,12 +21,29 @@ app.post("/signup", async (req, res) => {
 });
 
 // Feed API => Get All Users
-app.get("/user", async(req, res)=>{
+app.get("/users", async(req, res)=>{
 
   try {
    const users = await User.find({});
   // console.log("users", users);
   res.status(200).send(users);
+  } catch (error) {
+    res.status(404).send("Something went wrong" + error.message);
+    
+  }
+
+
+});
+
+// Delete user
+app.delete("/users", async(req, res)=>{
+
+  const emailId = req?.body.email;
+  try {
+  
+    const user = await User.findOneAndDelete({email: emailId});
+  
+  res.status(200).send("User Deleted Successfully!!");
   } catch (error) {
     res.status(404).send("Something went wrong" + error.message);
     
