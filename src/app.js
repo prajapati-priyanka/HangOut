@@ -75,6 +75,31 @@ app.get("/users/:id", async(req, res)=>{
 
 });
 
+// update user data
+app.patch("/users/:id", async(req, res)=>{
+
+  const userId = req?.params.id;
+  const userData = req?.body;
+
+  console.log(userId, userData);
+  try {
+  
+    const user = await User.findByIdAndUpdate(userId, userData, {returnDocument: "before"});  // shorthand for {_id: userId}
+    if(!user){
+      res.status(404).send("User cannot be found");
+    }else{
+     res.status(200).send("User Updated Successfully");
+
+    }
+  
+  } catch (error) {
+    res.status(404).send("Something went wrong" + error.message);
+    
+  }
+
+
+});
+
 // Database connection
 connectDB()
   .then(() => {
